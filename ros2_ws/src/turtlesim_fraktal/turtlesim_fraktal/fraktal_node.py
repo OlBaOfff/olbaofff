@@ -2,6 +2,7 @@ import rclpy
 from rclpy.node import Node
 from turtlesim.srv import TeleportRelative, TeleportAbsolute
 from std_srvs.srv import Empty
+from turtlesim.srv import Kill, Spawn
 import math
 import time
 
@@ -24,20 +25,35 @@ class FraktalNode(Node):
         self.length = 0.8
         self.level = 2
         time.sleep(2.0)
-        self.set_start_position()
+        self.replace_turtle()
         self.clear_screen()
         time.sleep(0.5)
         self.koch_curve(self.level, self.length)
+    
+    def replace_turtle(self):
+        #kill
+        kill = self.create_client(Kill, 'kill')
+        while not kill.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('Várakozás a kill szolgáltatásra...')
+        req_kill = Kill.Request()
+        req_kill.name = 'turtle1'
+        future = kill.call_async(req_kill)
+        rclpy.spin_until_future_complete(self, future)
 
-    def set_start_position(self):
-        req = TeleportAbsolute.Request()
-        req.x = 12.5
-        req.y = 5.0
-        req.theta = float(math.radians(180.0))
-        future = self.teleport_abs.call_async(req)
+        #respawn
+        spawn = self.create_client(Spawn, 'spawn')
+        while not spawn.wait_for_service(timeout_sec=1.0):
+         self.get_logger().info('Várakozás a spawn szolgáltatásra...')
+        req_spawn = Spawn.Request()
+        req_spawn.x = 12.5
+        req_spawn.y = 6.0
+        req_spawn.theta = float(math.radians(180.0))
+        req_spawn.name = 'turtle1'
+        future = spawn.call_async(req_spawn)
         rclpy.spin_until_future_complete(self, future)
         time.sleep(0.5)
 
+    
     def clear_screen(self):
         req = Empty.Request()
         future = self.clear_client.call_async(req)
