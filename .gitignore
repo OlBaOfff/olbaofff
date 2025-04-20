@@ -1,2 +1,4 @@
 .bashrc
-ros2_ws/build/.built_by
+ros2_ws/build
+ros2_ws/install
+ros2_ws/log

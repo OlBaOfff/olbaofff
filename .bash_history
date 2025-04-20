@@ -33,3 +33,50 @@ colcon build --packages-select turtlesim_fraktal
 echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
 ros2 pkg list | grep turtlesim_fraktal
 ros2 run turtlesim_fraktal fraktal
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+colcon build
+source install/setup.bash
+sudo apt update
+sudo apt install ros-humble-turtlesim
+ros2 pkg executables turtlesim
+ros2 run turtlesim turtlesim_node
+cd src
+ros2 pkg create --build-type ament_python turtlesim_fraktal --dependencies rclpy turtlesim
+clear
+sudo apt update
+sudo apt install ros-humble-rclpy ros-humble-geometry-msgs -y
+source /opt/ros/humble/setup.bash
+clear
+cd ros2_ws
+cd ~/ros2_ws
+colcon build
+ros2 run turtlesim_fraktal fraktal
+source install/setup.bash
+colcon build
+ros2 run turtlesim_fraktal fraktal
+chmod +x fraktal_node.py
+clear
+cd ~/ros2_ws/src
+rm -rf turtlesim_fraktal
+cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_python turtlesim_fraktal --dependencies rclpy turtlesim geometry_msgs
+cd ~/ros2_ws/src/turtlesim_fraktal
+mkdir turtlesim_fraktal
+touch turtlesim_fraktal/fraktal_node.py
+chmod +x turtlesim_fraktal/fraktal_node.py
+code turtlesim_fraktal/fraktal_node.py
+clear
+cd ~/ros2_ws
+colcon build
+ros2 run turtlesim turtlesim_node
+source install/setup.bash
+ros2 run turtlesim turtlesim_node
+ros2 run turtlesim_fraktal fraktal
+ros2 pkg list | grep turtlesim_fraktal
+ros2 run turtlesim_fraktal fraktal
+colcon build
+ros2 run turtlesim_fraktal fraktal
+git ad
+git add
+ros2 run turtlesim turtlesim_node
