@@ -31,8 +31,8 @@ class FraktalNode(Node):
 
     def set_start_position(self):
         req = TeleportAbsolute.Request()
-        req.x = 6.5
-        req.y = 6.0
+        req.x = 12.5
+        req.y = 5.0
         req.theta = float(math.radians(180.0))
         future = self.teleport_abs.call_async(req)
         rclpy.spin_until_future_complete(self, future)
