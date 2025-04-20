@@ -19,8 +19,8 @@ class FraktalNode(Node):
 
     def teleport(self, linear, angular):
         req = TeleportRelative.Request()
-        req.linear = linear
-        req.angular = math.radians(angular)
+        req.linear = float(linear)
+        req.angular = float(math.radians(angular))
         self.cli.call_async(req)
         time.sleep(0.5)  # kis szünet a mozdulat után
 
