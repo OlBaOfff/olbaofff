@@ -38,4 +38,26 @@ class TurtleController:
         time.sleep(0.05)
 
 
+class KochFractal:
+    def __init__(self, controller: TurtleController):
+        self.ctrl = controller
+
+    def draw_curve(self, steps: int, depth: int):
+        if depth == 0:
+            self.ctrl.move_forward(steps)
+        else:
+            unit = steps // 3
+            self.draw_curve(unit, depth - 1)
+            self.ctrl.rotate(60)
+            self.draw_curve(unit, depth - 1)
+            self.ctrl.rotate(-120)
+            self.draw_curve(unit, depth - 1)
+            self.ctrl.rotate(60)
+            self.draw_curve(unit, depth - 1)
+
+    def draw_snowflake(self, steps: int, depth: int):
+        for _ in range(3):
+            self.draw_curve(steps, depth)
+            self.ctrl.rotate(-120)
+
 
