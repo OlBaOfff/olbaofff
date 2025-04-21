@@ -60,4 +60,34 @@ class KochFractal:
             self.draw_curve(steps, depth)
             self.ctrl.rotate(-120)
 
+class KochSnowflakeNode(Node):
+    def __init__(self):
+        super().__init__('koch_snowflake_node')
+        self.get_logger().info
+        time.sleep(2)
+
+        #inicializálás
+        controller = TurtleController(self)
+        fractal = KochFractal(controller)
+
+        #rajzolás
+        self.get_logger().info
+        fractal.draw_snowflake(steps=27, depth=3)
+        self.get_logger().info
+
+
+
+def main():
+    rclpy.init()
+    node = KochSnowflakeNode()
+
+    try:
+        rclpy.spin_once(node, timeout_sec=1.0)
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
 
