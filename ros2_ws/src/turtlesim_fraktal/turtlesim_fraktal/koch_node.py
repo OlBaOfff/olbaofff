@@ -6,12 +6,12 @@ from geometry_msgs.msg import Twist
 
 
 class TurtleController:
-    def __init__(self, node: Node, speed: float = 1.0, unit_length: float = 0.1):
+    def __init__(self, node: Node, speed: float = 2.0, unit_length: float = 0.1):
         self.node = node
         self.publisher = node.create_publisher(Twist, '/turtle1/cmd_vel', 10)
         self.speed = speed
         self.unit_length = unit_length
-        self.turn_speed_deg = 30.0  
+        self.turn_speed_deg = 60.0  
 
     def move_forward(self, steps: int): #előre mozdítja a tekit
         twist = Twist()
@@ -74,8 +74,6 @@ class KochSnowflakeNode(Node):
         self.get_logger().info
         fractal.draw_snowflake(steps=27, depth=3)
         self.get_logger().info
-
-
 
 def main():
     rclpy.init()
